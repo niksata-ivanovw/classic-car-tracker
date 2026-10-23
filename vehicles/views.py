@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from vehicles.forms import ClassicCarCreateForm, ClassicCarUpdateForm
 from vehicles.models import ClassicCar
 
 
@@ -19,13 +20,13 @@ class ClassicCarDetailView(DetailView):
 class ClassicCarCreateView(CreateView):
     model = ClassicCar
     template_name = 'vehicles/car_form.html'
-    fields = ['model_name', 'manufacture_year', 'vin', 'manufacturer', 'required_parts']
+    form_class = ClassicCarCreateForm
     success_url = reverse_lazy('vehicles:car-list')
 
 class ClassicCarUpdateView(UpdateView):
     model = ClassicCar
     template_name = 'vehicles/car_form.html'
-    fields = ['model_name', 'manufacture_year', 'vin', 'manufacturer', 'required_parts']
+    form_class = ClassicCarUpdateForm
     success_url = reverse_lazy('vehicles:car-list')
 
 class ClassicCarDeleteView(DeleteView):

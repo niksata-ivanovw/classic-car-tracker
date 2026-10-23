@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
+from parts.forms import PartForm
 from parts.models import RestorationPart
 
 
@@ -18,13 +19,13 @@ class PartDetailView(DetailView):
 class PartCreateView(CreateView):
     model = RestorationPart
     template_name = 'parts/part_form.html'
-    fields = ['name', 'part_number', 'price']
+    form_class = PartForm
     success_url = reverse_lazy('parts-list')
 
 class PartUpdateView(UpdateView):
     model = RestorationPart
     template_name = 'parts/part_form.html'
-    fields = ['name', 'part_number', 'price']
+    form_class = PartForm
     success_url = reverse_lazy('parts-list')
 
 class PartDeleteView(DeleteView):
