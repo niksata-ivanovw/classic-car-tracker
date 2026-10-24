@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm mt-4">
+    <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">{{ car.manufacture_year }} {{ car.manufacturer.country }} {{ car.model_name }}</h3>
+    </div>
+    <div class="card-body">
+        <p><strong>VIN:</strong> {{ car.vin }}</p>
+        <p><strong>Manufacturer Country:</strong> {{ car.manufacturer.country }}</p>
+
+        <h5 class="mt-4">Required Restoration Parts:</h5>
+        {% if car.required_parts.all %}
+            <ul class="list-group list-group-flush mb-4">
+                {% for part in car.required_parts.all %}
+                    <li class="list-group-item">{{ part.name }} ({{ part.part_number }}) - ${{ part.price }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted mb-4">No parts currently assigned to this vehicle</p>
+        {% endif %}
+
+        <div class="mt-2">
+            <a href="{% url 'vehicles:car-update' car.pk %}" class="btn btn-warning">Edit Car</a>
+            <a href="{% url 'vehicles:car-delete' car.pk %}" class="btn btn-danger">Delete Car</a>
+            <a href="{% url 'vehicles:car-list' %}" class="btn btn-secondary">Back to Catalog</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
