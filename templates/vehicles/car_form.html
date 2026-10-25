@@ -7,16 +7,56 @@
             <div class="card-header bg-success text-white">
                 <h3 class="mb-0">{% if object %}Edit Classic Car{% else %}Add New Classic Car{% endif %}</h3>
             </div>
-        <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
 
-                {{ form.as_p }}
+                    <!-- Render model_name, manufacture_year, vin, manufacturer -->
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">{{ form.model_name.label }}</label>
+                        {{ form.model_name }}
+                        {{ form.model_name.errors }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">{{ form.manufacture_year.label }}</label>
+                        {{ form.manufacture_year }}
+                        {{ form.manufacture_year.errors }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">{{ form.vin.label }}</label>
+                        {{ form.vin }}
+                        {{ form.vin.errors }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">{{ form.manufacturer.label }}</label>
+                        {{ form.manufacturer }}
+                        {{ form.manufacturer.errors }}
+                    </div>
 
-                <button type="submit" class="btn btn-success mt-3">Save Classic Car</button>
-                <a href="{% url 'vehicles:car-list' %}" class="btn btn-secondary mt-3">Cancel</a>
-            </form>
-        </div>
+                    <!-- Only render parts if field is present (in Update form) -->
+                    {% if form.required_parts %}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Required Restoration Parts</label>
+                        <div class="border rounded p-3" style="max-height: 220px; overflow-y: auto;">
+                            {% for checkbox in form.required_parts %}
+                                <div class="form-check">
+                                    {{ checkbox.tag }}
+                                    <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                        {{ checkbox.choice_label }}
+                                    </label>
+                                </div>
+                            {% empty %}
+                                <p class="text-muted mb-0">No restoration parts in inventory yet. Add parts in the Parts section first.</p>
+                            {% endfor %}
+                        </div>
+                        {{ form.required_parts.errors }}
+                    </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-success mt-3">Save Classic Car</button>
+                    <a href="{% if object %}{% url 'vehicles:car-detail' object.pk %}{% else %}{% url 'vehicles:car-list' %}{% endif %}" class="btn btn-secondary mt-3">Cancel</a>
+                </form>
+            </div>
         </div>
     </div>
 </div>

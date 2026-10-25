@@ -16,4 +16,4 @@ class ManufacturerCreateView(CreateView):
     model = Manufacturer
     template_name = 'brands/manufacturer_form.html'
     form_class = ManufacturerForm
-    success_url = reverse_lazy('brands:manufacturer_list')
+    success_url = reverse_lazy('brands:manufacturer-list')

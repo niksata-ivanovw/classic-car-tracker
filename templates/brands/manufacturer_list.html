@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Car Manufacturers</h2>
+    <a href="{% url 'brands:manufacturer-create' %}" class="btn btn-primary">Add New Manufacturer</a>
+</div>
+
+<div class="row">
+    {% for manufacturer in manufacturers %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ manufacturer.name }}</h5>
+                    <p class="card-text"><strong>Country:</strong> {{ manufacturer.country }}</p>
+                    <p class="card-text text-muted"><strong>Established Year:</strong> {{ manufacturer.established_year }}</p>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning">No manufacturers listed yet. Click "Add New Manufacturer" to start!</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

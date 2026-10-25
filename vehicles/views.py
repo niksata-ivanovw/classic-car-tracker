@@ -31,5 +31,6 @@ class ClassicCarUpdateView(UpdateView):
 
 class ClassicCarDeleteView(DeleteView):
     model = ClassicCar
-    template_name = 'vehicles/car_delete.html'
+    template_name = 'vehicles/car_confirm_delete.html'
+    context_object_name = 'car'
     success_url = reverse_lazy('vehicles:car-list')

@@ -9,6 +9,8 @@ env/
 
 # Environment variables
 .env
+.venv/
+.idea/
 
 # Local SQLite database
 db.sqlite3

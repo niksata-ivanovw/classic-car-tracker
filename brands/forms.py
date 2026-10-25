@@ -20,5 +20,5 @@ class ManufacturerForm(forms.ModelForm):
         current_year = date.today().year
 
         if year is not None and year > current_year:
-            raise ValidationError(f"The established year cannot be in the future (greater than {current_year}")
+            raise ValidationError(f"The established year cannot be in the future (greater than {current_year})")
         return year
