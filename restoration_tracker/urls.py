@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
 
+from vehicles.views import HomeView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='vehicles/')),
+    path('', HomeView.as_view(), name='home'),
     path('vehicles/', include('vehicles.urls')),
     path('parts/', include('parts.urls')),
     path('brands/', include('brands.urls')),

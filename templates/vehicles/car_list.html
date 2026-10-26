@@ -2,17 +2,60 @@
 {% load vehicle_tags  %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Classic Cars Catalog</h2>
-    <a href="{% url 'vehicles:car-create' %}" class="btn btn-primary">Add New Car</a>
-</div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Classic Cars Catalog</h2>
+        <a href="{% url 'vehicles:car-create' %}" class="btn btn-primary">Add New Car</a>
+    </div>
+
+    <div class="card shadow-sm mb-4 bg-light border-0">
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-center">
+                <div class="col-md-4">
+                    <input type="text" name="q" class="form-control" placeholder="Search by model or VIN..." value="{{ search_query }}">
+                </div>
+
+                <div class="col-md-3">
+                    <select name="manufacturer" class="form-select">
+                        <option value="">All Manufacturers</option>
+                        {% for m in manufacturers %}
+                            <option value="{{ m.id }}" {% if selected_manufacturer == m.id|stringformat:'s' %}selected{% endif %}>
+                            {{ m.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <select name="sort" class="form-select">
+                        <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Sort: Newest First</option>
+                        <option value="oldest" {% if selected_sort == 'oldest' %}selected{% endif %}>Sort: Oldest First</option>
+                        <option value="model_asc" {% if selected_sort == 'model_asc' %}selected{% endif %}>Sort: Model (A-Z)</option>
+                        <option value="model_desc" {% if selected_sort == 'model_desc' %}selected{% endif %}>Sort: Model (Z-A)</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-secondary flex-fill">Apply</button>
+                    {% if search_query or selected_manufacturer or selected_sort %}
+                        <a href="{% url 'vehicles:car-list' %}" class="btn btn-outline-secondary">Reset</a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div class="row">
     {% for car in cars %}
         {% include 'vehicles/partials/_car_card.html' with car=car %}
     {% empty %}
         <div class="col-12">
-            <div class="alert alert-warning">No classic cars in the catalog yet.</div>
+            <div class="alert alert-warning text-center py-4">
+                <h5>No classic cars found matching your criteria.</h5>
+                {% if search_query or selected_manufacturer %}
+                    <a href="{% url 'vehicles:car-list' %}" class="btn btn-sm btn-outline-dark mt-2">Clear Filters</a>
+                {% else %}
+                    <p class="mb-0">No cars in catalog yet. Click "Add New Car" to get started!</p>
+                {% endif %}
         </div>
     {% endfor %}
     </div>

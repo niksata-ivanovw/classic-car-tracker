@@ -5,12 +5,14 @@ __pycache__/
 
 # Virtual environments
 venv/
+.venv/
 env/
+
+.idea/
+.vscode/
 
 # Environment variables
 .env
-.venv/
-.idea/
 
 # Local SQLite database
 db.sqlite3
