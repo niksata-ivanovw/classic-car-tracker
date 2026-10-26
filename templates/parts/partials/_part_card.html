@@ -3,7 +3,9 @@
 <div class="col-md-4 mb-4">
     <div class="card h-100 shadow-sm border-0">
         <div class="card-body d-flex flex-column">
-            <h5 class="card-title mb-1">{{ part.name }}</h5>
+            <h5 class="card-title mb-1">
+                <a href="{% url 'parts:part-detail' part.pk %}" class="text-decoration-none text-dark"></a>
+            </h5>
             <p class="card-text text-muted mb-2">
                 <small><strong>Part Number:</strong> {{ part.part_number }}</small>
             </p>
@@ -13,8 +15,9 @@
             </p>
 
             <div class="mt-auto d-flex gap-2">
+                <a href="{% url 'parts:part-detail' part.pk %}" class="btn btn-outline-info btn-sm">View</a>
                 <a href="{% url 'parts:part-edit' part.pk %}" class="btn btn-warning btn-sm flex-fill">Edit</a>
-                <a href="{% url 'parts:part-edit' part.pk %}" class="btn btn-danger btn-sm flex-fill">Delete</a>
+                <a href="{% url 'parts:part-delete' part.pk %}" class="btn btn-danger btn-sm flex-fill">Delete</a>
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@
         <p><strong>Price:</strong> ${{ part.price }}</p>
 
         <div class="mt-3">
-            <a href="{% url 'parts:part-update' part.pk %}" class="btn btn-warning">Edit Part</a>
+            <a href="{% url 'parts:part-edit' part.pk %}" class="btn btn-warning">Edit Part</a>
             <a href="{% url 'parts:part-delete' part.pk %}" class="btn btn-danger">Delete Part</a>
             <a href="{% url 'parts:part-list' %}" class="btn btn-secondary">Back to Inventory</a>
         </div>

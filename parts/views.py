@@ -15,6 +15,7 @@ class PartListView(ListView):
 class PartDetailView(DetailView):
     model = RestorationPart
     template_name = 'parts/part_detail.html'
+    context_object_name = 'part'
 
 class PartCreateView(CreateView):
     model = RestorationPart
