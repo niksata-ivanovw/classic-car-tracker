@@ -1,19 +1,30 @@
 {% extends 'base.html' %}
+{% load vehicle_tags %}
 
 {% block content %}
 <div class="card shadow-sm mt-4">
     <div class="card-header bg-primary text-white">
         <h3 class="mb-0">{{ car.manufacture_year }} {{ car.manufacturer.name }} {{ car.model_name }}</h3>
+        {% restoration_status_badge car as badge %}
+        <div>{{ badge|safe }}</div>
     </div>
     <div class="card-body">
-        <p><strong>VIN:</strong> {{ car.vin }}</p>
+        <p><strong>VIN:</strong> {{ car.vin }}  <span class="text-muted">({{ car.vin|mask_vin }})</span></p>
         <p><strong>Manufacturer Country:</strong> {{ car.manufacturer.country }}</p>
+
+        <div class="alert alert-secondary d-flex justify-content-between align-items-center mt-3">
+            <span><strong>Estimated Total Restoration Cost:</strong></span>
+            <span class="fs-5 fw-bold text-success">{{ car|total_parts_cost }}</span>
+        </div>
 
         <h5 class="mt-4">Required Restoration Parts:</h5>
         {% if car.required_parts.all %}
             <ul class="list-group list-group-flush mb-4">
                 {% for part in car.required_parts.all %}
-                    <li class="list-group-item">{{ part.name }} ({{ part.part_number }}) - ${{ part.price }}</li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ part.name }} <span class="text-muted">({{ part.part_number }})</span></span>
+                        <span class="text-succsss fw-bold">{{ part.price|currency }}</span>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
